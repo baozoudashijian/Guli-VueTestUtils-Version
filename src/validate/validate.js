@@ -5,6 +5,7 @@ const Validate = function (data, rules) {
     if(rule.required) {
       if(!value && value !== 0) {
         errors[rule.key] = {required: '必填'}
+        return
       }
     }
     if(rule.pattern) {
@@ -12,7 +13,18 @@ const Validate = function (data, rules) {
         rule.pattern = /^.+@.+$/
       }
       if(rule.pattern.test(value) === false) {
-        errors[rule.key] = {pattern: '格式不正确'}
+        if(!errors[rule.key]) {
+          errors[rule.key] = {}
+        }
+        errors[rule.key].pattern =  '格式不正确'
+      }
+    }
+    if(rule.minLength) {
+      if(value.length < rule.minLength) {
+        if(!errors[rule.key]) {
+          errors[rule.key] = {}
+        }
+        errors[rule.key].minLength = '太短'
       }
     }
   })

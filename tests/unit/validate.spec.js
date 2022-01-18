@@ -94,6 +94,22 @@ describe('Valiadte', () => {
 
   })
 
+  it('required & minLength', () => {
+    let data = {
+      email: '123'
+    }
+    let rules = [
+      {key: 'email', pattern: 'email', required: true, minLength: 6}
+    ]
+
+    let errors = Validate(data, rules)
+    expect(errors.email.minLength).to.exist
+    expect(errors.email.pattern).to.exist
+
+  })
+
+
+
 
 
 
