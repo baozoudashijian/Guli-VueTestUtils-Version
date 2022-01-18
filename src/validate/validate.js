@@ -19,12 +19,22 @@ const Validate = function (data, rules) {
         errors[rule.key].pattern =  '格式不正确'
       }
     }
+
     if(rule.minLength) {
       if(value.length < rule.minLength) {
         if(!errors[rule.key]) {
           errors[rule.key] = {}
         }
         errors[rule.key].minLength = '太短'
+      }
+    }
+
+    if(rule.maxLength) {
+      if(value.length > rule.maxLength) {
+        if(!errors[rule.key]) {
+          errors[rule.key] = {}
+        }
+        errors[rule.key].maxLength = '太长'
       }
     }
   })

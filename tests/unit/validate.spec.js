@@ -94,7 +94,7 @@ describe('Valiadte', () => {
 
   })
 
-  it('required & minLength', () => {
+  it('minLength', () => {
     let data = {
       email: '123'
     }
@@ -105,6 +105,20 @@ describe('Valiadte', () => {
     let errors = Validate(data, rules)
     expect(errors.email.minLength).to.exist
     expect(errors.email.pattern).to.exist
+
+  })
+
+  it('maxLength', () => {
+    let data = {
+      email: '1234567812345678910'
+    }
+    let rules = [
+      {key: 'email', pattern: 'email', required: true, maxLength: 16}
+    ]
+
+    let errors = Validate(data, rules)
+    expect(errors.email.minLength).to.not.exist
+    expect(errors.email.maxLength).to.exist
 
   })
 
