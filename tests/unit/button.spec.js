@@ -3,11 +3,11 @@ import { mount } from '@vue/test-utils'
 import Button from '../../src/button/button'
 
 describe('Button', () => {
-  it('存在.', () => {
+  it.skip('存在.', () => {
     expect(Button).to.exist
   })
 
-  it('设置icon', () => {
+  it.skip('设置icon', () => {
     const wrapper = mount(Button, {
       propsData: { icon: 'setting' }
     })
