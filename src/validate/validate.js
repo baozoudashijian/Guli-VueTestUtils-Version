@@ -1,44 +1,60 @@
-const Validate = function (data, rules) {
+function Validate (data, rules) {
   let errors = {}
   rules.forEach(rule => {
     let value = data[rule.key]
-    if(rule.required) {
-      if(!value && value !== 0) {
+    if (rule.required) {
+      let error = Validate.required(value)
+      if (error) {
         ensureObject(errors, rule.key)
-        errors[rule.key].required = '必填'
-        return
+        errors[rule.key]["required"] = error
+        return errors
       }
     }
-    if(rule.pattern) {
-      if(rule.pattern === 'email') {
-        rule.pattern = /^.+@.+$/
-      }
-      if(rule.pattern.test(value) === false) {
+    /*
+    * 遍历验证规则
+    * */
+    let validator = Object.keys(rule).filter(key => key !== 'key' || key !== 'required')
+    validator.forEach(validatorKey => {
+      let error = Validate[validatorKey] && Validate[validatorKey](value, rule[validatorKey])
+      if (error) {
         ensureObject(errors, rule.key)
-        errors[rule.key].pattern =  '格式不正确'
+        errors[rule.key][validatorKey] = error
       }
-    }
-
-    if(rule.minLength) {
-      if(value.length < rule.minLength) {
-        ensureObject(errors, rule.key)
-        errors[rule.key].minLength = '太短'
-      }
-    }
-
-    if(rule.maxLength) {
-      if(value.length > rule.maxLength) {
-        ensureObject(errors, rule.key)
-        errors[rule.key].maxLength = '太长'
-      }
-    }
+    })
   })
-  console.log(errors)
   return errors
 }
 
+Validate.required = (value) => {
+  if (!value && value !== 0) {
+    return '必填'
+  }
+}
+
+Validate.maxLength = (value, rule) => {
+  if (value.length > rule) {
+    return '太长'
+  }
+}
+
+Validate.minLength = (value, rule) => {
+  if (value.length < rule) {
+    return '太短'
+  }
+}
+
+Validate.pattern = (value, rule) => {
+  if (rule === 'email') {
+    rule = /^.+@.+$/
+  }
+  if (rule.test(value) === false) {
+    return '格式不正确'
+  }
+}
+
+
 const ensureObject = (errors, key) => {
-  if(!(typeof errors[key] === 'object')) {
+  if (!(typeof errors[key] === 'object')) {
     errors[key] = {}
   }
 }

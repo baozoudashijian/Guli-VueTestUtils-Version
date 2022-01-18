@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import Validate from '../../src/validate/validate.js'
 
-describe('Valiadte', () => {
+describe('Validate', () => {
   it('exist', () => {
     expect(Validate).to.exist
   })
@@ -122,7 +122,14 @@ describe('Valiadte', () => {
 
   })
 
-
+  it('many keys', () => {
+    let data = {
+      email: '1234567812345678910'
+    }
+    let rules = [
+      {key: 'email', pattern: 'email', required: true, maxLength: 16, minLength: 6}
+    ]
+  })
 
 
 
