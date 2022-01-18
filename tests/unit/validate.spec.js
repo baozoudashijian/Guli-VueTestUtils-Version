@@ -129,6 +129,30 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: 'email', required: true, maxLength: 16, minLength: 6}
     ]
+    let errors = Validate(data, rules)
+    expect(errors.email.minLength).to.not.exist
+    expect(errors.email.maxLength).to.exist
+    expect(errors.email.pattern).to.exist
+  })
+
+  it('自定义测试规则 hasNumber', () => {
+    let data = {
+      email: 'abc'
+    }
+    let rules = [
+      {key: 'email', required: true, hasNumber: true }
+    ]
+    Validate.hasNumber = (value) => {
+      if(!/\d/.test(value)) {
+        return '必须含有数字'
+      }
+    }
+    let errors
+    let fn = () => {
+      errors = Validate(data, rules)
+    }
+    expect(fn).to.not.throw()
+    expect(errors.email.hasNumber).to.eq('必须含有数字')
   })
 
 
