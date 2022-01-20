@@ -143,14 +143,14 @@ describe('Validate', () => {
       email: 'abc'
     }
     let rules = [
-      {key: 'email', required: true, hasNumber: true }
+      {key: 'email', required: true, hasNumber: true}
     ]
     let validator = new Validator()
-    validator.add('hasNumber', (value) => {
-      if(!/\d/.test(value)) {
+    validator['hasNumber'] = (value) => {
+      if (!/\d/.test(value)) {
         return '必须含有数字'
       }
-    } )
+    }
     let errors
     let fn = () => {
       errors = validator.validate(data, rules)
@@ -159,8 +159,28 @@ describe('Validate', () => {
     expect(errors.email.hasNumber).to.eq('必须含有数字')
   })
 
-
-
+  it('两个validator 互相不影响', () => {
+    let data = {
+      email: 'ab222c'
+    }
+    let rules = [
+      {key: 'email', required: true, hasNumber: true}
+    ]
+    let validator1 = new Validator()
+    let validator2 = new Validator()
+    validator1['hasNumber'] = (value) => {
+      if (!/\d/.test(value)) {
+        return '必须含有数字'
+      }
+    }
+    let errors
+    expect(() => {
+      validator1.validate(data, rules)
+    }).to.not.throw()
+    expect(() => {
+      validator2.validate(data, rules)
+    }).to.throw()
+  })
 
 
 })

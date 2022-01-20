@@ -19,13 +19,19 @@ class Validator {
       /*
       * 遍历验证规则
       * */
-      let validator = Object.keys(rule).filter(key => key !== 'key' || key !== 'required')
-      validator.forEach(validatorKey => {
-        let error = this[validatorKey] && this[validatorKey](value, rule[validatorKey])
-        if (error) {
-          this.ensureObject(errors, rule.key)
-          errors[rule.key][validatorKey] = error
+      let validators = Object.keys(rule).filter(key => key !== 'key' && key !== 'required')
+      console.log(validators)
+      validators.forEach(validatorKey => {
+        if(this[validatorKey]) {
+          let error = this[validatorKey](value, rule[validatorKey])
+          if (error) {
+            this.ensureObject(errors, rule.key)
+            errors[rule.key][validatorKey] = error
+          }
+        } else {
+          throw `不存在的校验器：${validatorKey}`
         }
+
       })
     })
     return errors
