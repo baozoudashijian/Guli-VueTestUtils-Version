@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <g-button type="danger">Primary</g-button>
+    <g-pagination></g-pagination>
   </div>
 </template>
 
 <script>
-import Button from './button/button.vue'
+
+  import Pagination from './pagination/pagination'
 
 export default {
   name: 'App',
   components: {
-    'g-button': Button
+    'g-pagination': Pagination
   }
 }
 </script>
