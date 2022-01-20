@@ -1,62 +1,71 @@
-function Validate (data, rules) {
-  let errors = {}
-  rules.forEach(rule => {
-    let value = data[rule.key]
-    if (rule.required) {
-      let error = Validate.required(value)
-      if (error) {
-        ensureObject(errors, rule.key)
-        errors[rule.key]["required"] = error
-        return errors
+class Validator {
+  // 添加自定义方法
+  add(type, cb) {
+    Validator.prototype[type] = cb
+  }
+
+  validate(data, rules) {
+    let errors = {}
+    rules.forEach(rule => {
+      let value = data[rule.key]
+      if (rule.required) {
+        let error = this.required(value)
+        if (error) {
+          this.ensureObject(errors, rule.key)
+          errors[rule.key]["required"] = error
+          return errors
+        }
       }
-    }
-    /*
-    * 遍历验证规则
-    * */
-    let validator = Object.keys(rule).filter(key => key !== 'key' || key !== 'required')
-    validator.forEach(validatorKey => {
-      let error = Validate[validatorKey] && Validate[validatorKey](value, rule[validatorKey])
-      if (error) {
-        ensureObject(errors, rule.key)
-        errors[rule.key][validatorKey] = error
-      }
+      /*
+      * 遍历验证规则
+      * */
+      let validator = Object.keys(rule).filter(key => key !== 'key' || key !== 'required')
+      validator.forEach(validatorKey => {
+        let error = this[validatorKey] && this[validatorKey](value, rule[validatorKey])
+        if (error) {
+          this.ensureObject(errors, rule.key)
+          errors[rule.key][validatorKey] = error
+        }
+      })
     })
-  })
-  return errors
+    return errors
+  }
+
+  required(value) {
+    if (!value && value !== 0) {
+      return '必填'
+    }
+  }
+
+  maxLength(value, rule) {
+    if (value.length > rule) {
+      return '太长'
+    }
+  }
+
+  minLength(value, rule) {
+    if (value.length < rule) {
+      return '太短'
+    }
+  }
+
+
+  pattern(value, rule) {
+    if (rule === 'email') {
+      rule = /^.+@.+$/
+    }
+    if (rule.test(value) === false) {
+      return '格式不正确'
+    }
+  }
+
+
+  ensureObject(errors, key) {
+    if (!(typeof errors[key] === 'object')) {
+      errors[key] = {}
+    }
+  }
+
 }
 
-Validate.required = (value) => {
-  if (!value && value !== 0) {
-    return '必填'
-  }
-}
-
-Validate.maxLength = (value, rule) => {
-  if (value.length > rule) {
-    return '太长'
-  }
-}
-
-Validate.minLength = (value, rule) => {
-  if (value.length < rule) {
-    return '太短'
-  }
-}
-
-Validate.pattern = (value, rule) => {
-  if (rule === 'email') {
-    rule = /^.+@.+$/
-  }
-  if (rule.test(value) === false) {
-    return '格式不正确'
-  }
-}
-
-
-const ensureObject = (errors, key) => {
-  if (!(typeof errors[key] === 'object')) {
-    errors[key] = {}
-  }
-}
-
-export default Validate
+export default Validator

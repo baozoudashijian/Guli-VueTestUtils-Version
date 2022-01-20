@@ -3,6 +3,8 @@
 ## Project setup
 ```
 yarn install
+
+node v16.13.0 不支持lang=sass
 ```
 
 ### Compiles and hot-reloads for development

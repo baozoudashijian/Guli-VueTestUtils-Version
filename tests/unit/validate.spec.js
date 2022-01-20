@@ -1,9 +1,9 @@
 import {expect} from 'chai'
-import Validate from '../../src/validate/validate.js'
+import Validator from '../../src/validate/validate.js'
 
 describe('Validate', () => {
   it('exist', () => {
-    expect(Validate).to.exist
+    expect(Validator).to.exist
   })
 
   it('required true 报错', () => {
@@ -13,7 +13,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', required: true}
     ]
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email.required).to.eq('必填')
   })
 
@@ -24,7 +25,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', required: true}
     ]
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email).to.not.exist
   })
 
@@ -35,8 +37,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: /^.+@.+$/}
     ]
-
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email.pattern).to.eq('格式不正确')
 
   })
@@ -48,8 +50,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: /^.+@.+$/}
     ]
-
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email).to.not.exist
 
   })
@@ -61,8 +63,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: 'email'}
     ]
-
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email.pattern).to.eq('格式不正确')
 
   })
@@ -74,8 +76,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: 'email'}
     ]
-
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email).to.not.exist
 
   })
@@ -87,8 +89,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: 'email', required: true}
     ]
-
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email.required).to.exist
     expect(errors.email.pattern).to.not.exist
 
@@ -101,8 +103,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: 'email', required: true, minLength: 6}
     ]
-
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email.minLength).to.exist
     expect(errors.email.pattern).to.exist
 
@@ -115,8 +117,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: 'email', required: true, maxLength: 16}
     ]
-
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email.minLength).to.not.exist
     expect(errors.email.maxLength).to.exist
 
@@ -129,7 +131,8 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', pattern: 'email', required: true, maxLength: 16, minLength: 6}
     ]
-    let errors = Validate(data, rules)
+    let validator = new Validator()
+    let errors = validator.validate(data, rules)
     expect(errors.email.minLength).to.not.exist
     expect(errors.email.maxLength).to.exist
     expect(errors.email.pattern).to.exist
@@ -142,14 +145,15 @@ describe('Validate', () => {
     let rules = [
       {key: 'email', required: true, hasNumber: true }
     ]
-    Validate.hasNumber = (value) => {
+    let validator = new Validator()
+    validator.add('hasNumber', (value) => {
       if(!/\d/.test(value)) {
         return '必须含有数字'
       }
-    }
+    } )
     let errors
     let fn = () => {
-      errors = Validate(data, rules)
+      errors = validator.validate(data, rules)
     }
     expect(fn).to.not.throw()
     expect(errors.email.hasNumber).to.eq('必须含有数字')
