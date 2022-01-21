@@ -1,6 +1,6 @@
 <template>
   <div class="g-pagination">
-    <span class="g-pagination-item" @click="clickItem(currentPage - 1)"><g-icon icon="arrow-left"></g-icon></span>
+    <span class="g-pagination-item" :class="{dark: currentPage == 1}" @click="clickItem(currentPage - 1)" ><g-icon icon="arrow-left"></g-icon></span>
     <template v-for="n in paginationArr">
       <template v-if="n === currentPage">
         <span class="g-pagination-item active">{{n}}</span>
@@ -12,7 +12,7 @@
         <span class="g-pagination-item" @click="clickItem(n)">{{n}}</span>
       </template>
     </template>
-    <span class="g-pagination-item" @click="clickItem(currentPage + 1)"><g-icon icon="arrow-right"></g-icon></span>
+    <span class="g-pagination-item" :class="{dark: currentPage == totalPage}" @click="clickItem(currentPage + 1)"><g-icon icon="arrow-right"></g-icon></span>
   </div>
 </template>
 
@@ -91,6 +91,8 @@
       &.dot, &.dot:hover
         border: none
         color: #000
+      &.dark
+        fill: #999
 
       &:last-child
         margin-right: 0
