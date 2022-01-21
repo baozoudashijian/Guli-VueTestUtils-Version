@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-pagination :total-page="10" :current-page="3"></g-pagination>
+    <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>
 
@@ -10,6 +10,11 @@
 
 export default {
   name: 'App',
+  data() {
+    return {
+      currentPage: 3
+    }
+  },
   components: {
     'g-pagination': Pagination
   }
