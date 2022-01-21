@@ -34,23 +34,22 @@
     components: {
       'g-icon': Icon
     },
-    data() {
-      const res = unique([1, this.currentPage - 2, this.currentPage - 1, this.currentPage, this.currentPage + 1, this.currentPage + 2, this.totalPage]).filter(number => number > 0).reduce((previousValue, currentValue, currentIndex, array) => {
-        previousValue.push(array[currentIndex])
-        if (array[currentIndex + 1] && array[currentIndex + 1] - array[currentIndex] > 1) {
-          previousValue.push('•••')
-        }
-        return previousValue
-      }, [])
-
-      return {
-        paginationArr: res
+    computed: {
+      paginationArr() {
+        const res = unique([1, this.currentPage - 2, this.currentPage - 1, this.currentPage, this.currentPage + 1, this.currentPage + 2, this.totalPage]).filter(number => number > 0 && number < this.totalPage + 1).reduce((previousValue, currentValue, currentIndex, array) => {
+          previousValue.push(array[currentIndex])
+          if (array[currentIndex + 1] && array[currentIndex + 1] - array[currentIndex] > 1) {
+            previousValue.push('•••')
+          }
+          return previousValue
+        }, [])
+        return res
       }
     },
     methods: {
       clickItem(n) {
         console.log(n)
-        if(n >= 1 && n < this.totalPage + 1) {
+        if (n >= 1 && n < this.totalPage + 1) {
           this.$emit('update:currentPage', n)
         }
       }
