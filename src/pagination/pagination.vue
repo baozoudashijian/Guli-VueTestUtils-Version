@@ -36,7 +36,31 @@
     },
     computed: {
       paginationArr() {
-        const res = unique([1, this.currentPage - 2, this.currentPage - 1, this.currentPage, this.currentPage + 1, this.currentPage + 2, this.totalPage]).filter(number => number > 0 && number < this.totalPage + 1).reduce((previousValue, currentValue, currentIndex, array) => {
+        let page;
+        switch (this.currentPage) {
+          case 1:
+            page = this.currentPage + 3
+            break
+          case 2:
+            page = this.currentPage + 2
+            break
+          case 3:
+            page = this.currentPage + 1
+            break
+          case this.totalPage:
+            page = this.currentPage - 3
+            break
+          case this.totalPage - 1:
+            page = this.currentPage - 2
+            break
+          case this.totalPage - 2:
+            page = this.currentPage - 1
+            break
+          default:
+            page = this.currentPage
+        }
+
+        const res = unique([1, page - 2, page - 1, page, page + 1, page + 2, this.totalPage]).filter(number => number > 0 && number < this.totalPage + 1).reduce((previousValue, currentValue, currentIndex, array) => {
           previousValue.push(array[currentIndex])
           if (array[currentIndex + 1] && array[currentIndex + 1] - array[currentIndex] > 1) {
             previousValue.push('•••')

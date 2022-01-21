@@ -12,7 +12,7 @@ export default {
   name: 'App',
   data() {
     return {
-      currentPage: 3
+      currentPage: 2
     }
   },
   components: {
