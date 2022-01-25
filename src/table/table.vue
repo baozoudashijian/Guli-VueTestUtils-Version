@@ -3,10 +3,12 @@
     <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
+        <th v-if="checkBox"></th>
         <th v-for="column in columns">{{column.title}}</th>
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
         <td v-if="dispalySort">{{index}}</td>
+        <td v-if="checkBox"><input type="checkbox"></td>
         <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
       </tr>
     </table>
@@ -39,6 +41,10 @@
       },
       size: {
         type: String
+      },
+      checkBox: {
+        type: Boolean,
+        default: false
       }
     }
   }
