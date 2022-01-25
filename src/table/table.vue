@@ -7,7 +7,7 @@
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
         <td v-if="dispalySort">{{index}}</td>
-        <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{key}}</td>
+        <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
       </tr>
     </table>
   </div>
