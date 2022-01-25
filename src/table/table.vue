@@ -1,6 +1,6 @@
 <template>
   <div class="g-table">
-    <table :class="bordered">
+    <table :class="{bordered}">
       <tr>
         <th v-if="dispalySort"></th>
         <th v-for="column in columns">{{column.title}}</th>
@@ -43,26 +43,32 @@
       /*display: block*/
       border-collapse: collapse
       width: 100%
+
       tr
         text-align: left
         font-size: 14px
+
         th
           padding: 16px
           font-weight: 500
           background-color: #fafafa
           border-bottom: 1px solid #f0f0f0
-          border-right: 1px solid #f0f0f0
+
         td
           padding: 16px
           border-bottom: 1px solid #f0f0f0
-          border-right: 1px solid #f0f0f0
 
       &.bordered
-        tr
+        > tr
 
-          th
+          > th
             border-right: 1px solid #f0f0f0
-          td
+            &:nth-child(1)
+              border-left: 1px solid #f0f0f0
+
+          > td
             border-right: 1px solid #f0f0f0
+            &:nth-child(1)
+              border-left: 1px solid #f0f0f0
 
 </style>
