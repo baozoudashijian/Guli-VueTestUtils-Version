@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-table :dataSource="dataSource" :columns="columns" bordered  stripe />
+    <g-table :dataSource="dataSource" :columns="columns" bordered  stripe size="small" />
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>

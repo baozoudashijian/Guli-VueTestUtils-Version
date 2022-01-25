@@ -1,6 +1,6 @@
 <template>
   <div class="g-table">
-    <table :class="{bordered, stripe}">
+    <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
         <th v-for="column in columns">{{column.title}}</th>
@@ -36,6 +36,9 @@
       stripe: {
         type: Boolean,
         default: false
+      },
+      size: {
+        type: String
       }
     }
   }
@@ -80,5 +83,12 @@
         > tr
           &:nth-child(2n-1)
             background-color: #fafafa
+      &.small
+        > tr
+          > th
+            padding: 8px
+
+          > td
+            padding: 8px
 
 </style>
