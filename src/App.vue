@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-table :dataSource="dataSource" :columns="columns" bordered />
+    <g-table :dataSource="dataSource" :columns="columns" bordered  stripe />
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>
@@ -28,6 +28,18 @@
             age: 42,
             address: '西湖区湖底公园1号',
           },
+          {
+            key: '3',
+            name: '胡彦祖',
+            age: 42,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '4',
+            name: '胡彦祖',
+            age: 42,
+            address: '西湖区湖底公园1号',
+          }
         ],
         columns: [
           {
