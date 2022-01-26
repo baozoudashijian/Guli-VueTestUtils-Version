@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-table :dataSource="dataSource" :columns="columns" bordered  stripe size="small" check-box />
+    <g-table :dataSource="dataSource" :columns="columns" :selected-items.sync="selected" bordered  stripe size="small" check-box />
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>
@@ -15,6 +15,7 @@
     data() {
       return {
         currentPage: 2,
+        selected: [],
         dataSource: [
           {
             key: '1',

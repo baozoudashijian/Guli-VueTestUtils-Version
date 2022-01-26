@@ -1,5 +1,6 @@
 <template>
   <div class="g-table">
+    <div>{{selectedItems}}</div>
     <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
@@ -8,7 +9,7 @@
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
         <td v-if="dispalySort">{{index}}</td>
-        <td v-if="checkBox"><input type="checkbox"></td>
+        <td v-if="checkBox" @change="onChangeItem(dataSourceItem, $event)"><input type="checkbox"></td>
         <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
       </tr>
     </table>
@@ -45,6 +46,22 @@
       checkBox: {
         type: Boolean,
         default: false
+      },
+      selectedItems: {
+        type: Array,
+        default: () => []
+      }
+    },
+    methods: {
+      onChangeItem(item, e) {
+        let selected = e.target.checked
+        let copy = JSON.parse(JSON.stringify(this.selectedItems))
+        if(selected) {
+          copy.push(item)
+        } else {
+          copy = copy.filter(i => i.key !== item.key)
+        }
+        this.$emit('update:selectedItems', copy)
       }
     }
   }
