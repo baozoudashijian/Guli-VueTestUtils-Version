@@ -4,7 +4,7 @@
     <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
-        <th v-if="checkBox"><input type="checkbox"></th>
+        <th v-if="checkBox" @change="onChangeAllItem"><input type="checkbox"></th>
         <th v-for="column in columns">{{column.title}}</th>
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
@@ -62,6 +62,17 @@
           copy = copy.filter(i => i.key !== item.key)
         }
         this.$emit('update:selectedItems', copy)
+      },
+      onChangeAllItem(e) {
+        let selected = e.target.checked
+        let copy = JSON.parse(JSON.stringify(this.dataSource))
+
+        if(selected) {
+          this.$emit('update:selectedItems', copy)
+        } else {
+          this.$emit('update:selectedItems', [])
+        }
+
       },
       inSelectItems(item) {
         return this.selectedItems.filter(i => i.key === item.key).length > 0
