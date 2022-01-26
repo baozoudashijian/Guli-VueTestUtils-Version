@@ -4,7 +4,7 @@
     <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
-        <th v-if="checkBox"><input type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
+        <th v-if="checkBox"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
         <th v-for="column in columns">{{column.title}}</th>
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
@@ -52,9 +52,11 @@
         default: () => []
       }
     },
+    mounted() {
+      this.judgeCheckboxStatus(this.selectedItems)
+    },
     computed: {
       inAllSelectItems() {
-        console.log(this.selectedItems.length === this.dataSource.length);
         return this.selectedItems.length === this.dataSource.length
       }
     },
@@ -82,6 +84,18 @@
       },
       inSelectItems(item) {
         return this.selectedItems.filter(i => i.key === item.key).length > 0
+      },
+      judgeCheckboxStatus(nextVal) {
+        if(nextVal.length === 0 || nextVal.length === this.dataSource.length) {
+          this.$refs.selectAll.indeterminate = false
+        } else {
+          this.$refs.selectAll.indeterminate = true
+        }
+      }
+    },
+    watch: {
+      selectedItems(nextVal) {
+        this.judgeCheckboxStatus(nextVal)
       }
     }
   }
