@@ -3,7 +3,7 @@
     <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
-        <th v-if="checkBox"></th>
+        <th v-if="checkBox"><input type="checkbox"></th>
         <th v-for="column in columns">{{column.title}}</th>
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
@@ -89,6 +89,8 @@
         > tr
           &:nth-child(2n-1)
             background-color: #fafafa
+          &:hover
+            background-color: #f5f7fa
       &.small
         > tr
           > th
