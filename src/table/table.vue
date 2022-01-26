@@ -4,7 +4,7 @@
     <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
-        <th v-if="checkBox" @change="onChangeAllItem"><input type="checkbox"></th>
+        <th v-if="checkBox"><input type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
         <th v-for="column in columns">{{column.title}}</th>
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
@@ -50,6 +50,12 @@
       selectedItems: {
         type: Array,
         default: () => []
+      }
+    },
+    computed: {
+      inAllSelectItems() {
+        console.log(this.selectedItems.length === this.dataSource.length);
+        return this.selectedItems.length === this.dataSource.length
       }
     },
     methods: {
