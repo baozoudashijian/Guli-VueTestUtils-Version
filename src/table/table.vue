@@ -9,7 +9,7 @@
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
         <td v-if="dispalySort">{{index}}</td>
-        <td v-if="checkBox" @change="onChangeItem(dataSourceItem, $event)"><input type="checkbox"></td>
+        <td v-if="checkBox"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
         <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
       </tr>
     </table>
@@ -62,6 +62,9 @@
           copy = copy.filter(i => i.key !== item.key)
         }
         this.$emit('update:selectedItems', copy)
+      },
+      inSelectItems(item) {
+        return this.selectedItems.filter(i => i.key === item.key).length > 0
       }
     }
   }
