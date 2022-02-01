@@ -57,6 +57,7 @@
     },
     computed: {
       inAllSelectItems() {
+        // 这样判断有问题
         return this.selectedItems.length === this.dataSource.length
       }
     },
