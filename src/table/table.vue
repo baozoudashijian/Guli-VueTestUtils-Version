@@ -8,8 +8,8 @@
         <th v-for="column in columns">
           {{column.title}}
           <span class="g-table-sort" v-if="column.key in orderBy" @click="sortHandle">
-            <g-icon icon="arrow-down" ></g-icon>
-            <g-icon icon="arrow-up" ></g-icon>
+            <g-icon icon="arrow-up" v-if="orderBy[column.key] === 'asc'"></g-icon>
+            <g-icon icon="arrow-down" v-if="orderBy[column.key] === 'desc'"></g-icon>
           </span>
         </th>
       </tr>
