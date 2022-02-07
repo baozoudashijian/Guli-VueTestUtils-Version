@@ -4,7 +4,9 @@
 ```
 yarn install
 
-node v16.13.0 不支持lang=sass
+node v16.13.0 不支持lang=sass 项目会运行不起来
+
+node v10.23.0
 ```
 
 ### Compiles and hot-reloads for development
