@@ -7,9 +7,10 @@
         <th v-if="checkBox"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
         <th v-for="column in columns">
           {{column.title}}
-          <span class="g-table-sort" v-if="column.key in orderBy" @click="sortHandle">
+          <span class="g-table-sort" v-if="column.key in orderBy" @click="sortHandle(column.key, orderBy[column.key])">
             <g-icon icon="arrow-up" v-if="orderBy[column.key] === 'asc'"></g-icon>
             <g-icon icon="arrow-down" v-if="orderBy[column.key] === 'desc'"></g-icon>
+            <g-icon icon="bupaixu" v-if="orderBy[column.key] === '-'"></g-icon>
           </span>
         </th>
       </tr>
@@ -123,8 +124,19 @@
           this.$refs.selectAll.indeterminate = true
         }
       },
-      sortHandle() {
-        console.log(123)
+      sortHandle(key, sortRule) {
+        // desc -> asc -> -
+        let copy  = JSON.parse(JSON.stringify(this.orderBy))
+        if(sortRule === 'desc') {
+          copy[key] = 'asc'
+        } else if (sortRule === '-') {
+          copy[key] = 'desc'
+        } else {
+          copy[key] = '-'
+        }
+
+        this.$emit('update:orderBy', copy)
+        console.log(key, sortRule)
       }
     },
     watch: {

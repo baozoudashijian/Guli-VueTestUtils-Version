@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-table :dataSource="dataSource" :columns="columns" :selected-items.sync="selected" bordered  stripe check-box :order-by="orderBy" />
+    <g-table :dataSource="dataSource" :columns="columns" :selected-items.sync="selected" bordered  stripe check-box :order-by.sync="orderBy" />
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>
