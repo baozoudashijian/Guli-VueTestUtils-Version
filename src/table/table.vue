@@ -134,9 +134,10 @@
         } else {
           copy[key] = '-'
         }
-
+        // 更新orderBy
         this.$emit('update:orderBy', copy)
-        console.log(key, sortRule)
+        // // 更新数据 排序只能根据一个属性排序 可以根据多个属性排序吗
+        // this.$emit
       }
     },
     watch: {
