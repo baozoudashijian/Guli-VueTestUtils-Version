@@ -58,7 +58,21 @@
     computed: {
       inAllSelectItems() {
         // 这样判断有问题
-        return this.selectedItems.length === this.dataSource.length
+        if(!(this.selectedItems.length === this.dataSource.length)) {
+          return false
+        }
+        let flag
+        let arrselectedItems = this.selectedItems.map(item => item.key).sort((a,b) => a - b)
+        let arrdataSource = this.dataSource.map(item => item.key).sort((a,b) => a - b)
+        for(let i=0; i<arrdataSource.length; i++) {
+          if(!(arrdataSource[i] === arrselectedItems[i])) {
+            flag = false
+            break
+          }else{
+            flag = true
+          }
+        }
+        return flag
       }
     },
     methods: {
