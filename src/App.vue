@@ -80,6 +80,10 @@
       updateSortBy() {
         this.loading = true
         setTimeout(() => {
+          // Todo
+          /*
+          * {age, desc} 如何给后端发送排序的属性和排序规则
+          * */
           // this.dataSource.sort((a, b) => a.age - b.age) 这个和下面的有什么区别
           this.dataSource = this.dataSource.sort((a, b) => a.age - b.age)
           this.loading = false
