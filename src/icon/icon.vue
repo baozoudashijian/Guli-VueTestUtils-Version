@@ -19,10 +19,10 @@
       }
     },
     created() {
-      console.log(`#icon-${this.icon}`, 'created')
+      // console.log(`#icon-${this.icon}`, 'created')
     },
     mounted() {
-      console.log(`#icon-${this.icon}`, 'mounted')
+      // console.log(`#icon-${this.icon}`, 'mounted')
     }
   }
 </script>

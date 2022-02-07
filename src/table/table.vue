@@ -5,7 +5,13 @@
       <tr>
         <th v-if="dispalySort"></th>
         <th v-if="checkBox"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
-        <th v-for="column in columns">{{column.title}}</th>
+        <th v-for="column in columns">
+          {{column.title}}
+          <span class="g-table-sort" v-if="column.key in orderBy" @click="sortHandle">
+            <g-icon icon="arrow-down" ></g-icon>
+            <g-icon icon="arrow-up" ></g-icon>
+          </span>
+        </th>
       </tr>
       <tr v-for="(dataSourceItem, index) in dataSource">
         <td v-if="dispalySort">{{index}}</td>
@@ -17,6 +23,9 @@
 </template>
 
 <script>
+
+  import Icon from '../icon/icon'
+
   export default {
     name: "table",
     props: {
@@ -50,7 +59,14 @@
       selectedItems: {
         type: Array,
         default: () => []
+      },
+      orderBy: {
+        type: Object,
+        default: () => ({})
       }
+    },
+    components: {
+      'g-icon': Icon
     },
     mounted() {
       this.judgeCheckboxStatus(this.selectedItems)
@@ -106,6 +122,9 @@
         } else {
           this.$refs.selectAll.indeterminate = true
         }
+      },
+      sortHandle() {
+        console.log(123)
       }
     },
     watch: {
@@ -134,7 +153,6 @@
           font-weight: 500
           background-color: #fafafa
           border-bottom: 1px solid #f0f0f0
-
         td
           padding: 16px
           border-bottom: 1px solid #f0f0f0
