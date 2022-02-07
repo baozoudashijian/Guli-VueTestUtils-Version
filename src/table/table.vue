@@ -1,6 +1,8 @@
 <template>
   <div class="g-table">
-    <div>{{selectedItems}}</div>
+    <div class="g-table-modal" v-if="loading">
+      <g-icon icon="loading"></g-icon>
+    </div>
     <table :class="{bordered, stripe, 'small': size === 'small'}">
       <tr>
         <th v-if="dispalySort"></th>
@@ -64,6 +66,10 @@
       orderBy: {
         type: Object,
         default: () => ({})
+      },
+      loading: {
+        type: Boolean,
+        default: false
       }
     },
     components: {
@@ -149,7 +155,22 @@
 </script>
 
 <style scoped lang="sass">
+  @import "../var"
   .g-table
+    position: relative
+    &-modal
+      position: absolute
+      width: 100%
+      height: 100%
+      background-color: rgba(255, 255, 255, .8)
+      display: flex
+      justify-content: center
+      align-items: center
+
+      > svg
+        width: 2em
+        height: 2em
+        @include spin
     table
       /*display: block*/
       border-collapse: collapse

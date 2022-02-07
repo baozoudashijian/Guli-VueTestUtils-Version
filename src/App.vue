@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-table :dataSource="dataSource" :columns="columns" :selected-items.sync="selected" bordered  stripe check-box :order-by.sync="orderBy" @update:orderBy="updateSortBy" />
+    <g-table :loading="loading" :dataSource="dataSource" :columns="columns" :selected-items.sync="selected" bordered  stripe check-box :order-by.sync="orderBy" @update:orderBy="updateSortBy" />
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>
@@ -14,6 +14,7 @@
     name: 'App',
     data() {
       return {
+        loading: false,
         currentPage: 2,
         selected: [
           {
@@ -77,9 +78,11 @@
     },
     methods: {
       updateSortBy() {
+        this.loading = true
         setTimeout(() => {
           // this.dataSource.sort((a, b) => a.age - b.age) 这个和下面的有什么区别
           this.dataSource = this.dataSource.sort((a, b) => a.age - b.age)
+          this.loading = false
         }, 2000)
       }
     }

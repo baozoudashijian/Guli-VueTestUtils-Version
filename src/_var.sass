@@ -12,3 +12,14 @@ $success: #E84148
 $info: #768D91
 $warning: #EDAD74
 $danger: #EDAD95
+
+
+@keyframes spin
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
+
+@mixin spin
+  animation: spin 2s infinite linear

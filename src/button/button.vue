@@ -36,11 +36,6 @@
 
 <style lang="sass">
   @import "./src/var"
-  @keyframes spin
-    0%
-      transform: rotate(0deg)
-    100%
-      transform: rotate(360deg)
 
   .g-button
     display: inline-flex
@@ -68,7 +63,7 @@
       margin-left: .2em
 
     .loading
-      animation: spin 2s infinite linear
+      @include spin
 
   .icon-left
     > svg
