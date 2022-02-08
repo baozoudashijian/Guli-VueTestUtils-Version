@@ -86,7 +86,8 @@
     mounted() {
       this.judgeCheckboxStatus(this.selectedItems)
       let tableCopy = this.$refs.table.cloneNode(true) // 这个table目前在内存中
-      tableCopy.children[1].remove()
+      tableCopy.children[0].className = 'xxx' // thead
+      tableCopy.children[1].remove() // tbody
       console.log(tableCopy);
       this.$refs.wrapper.appendChild(tableCopy)
     },
