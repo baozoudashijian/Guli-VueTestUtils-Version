@@ -6,25 +6,25 @@
       </div>
       <table :class="{bordered, stripe, 'small': size === 'small'}" ref="table">
         <thead>
-        <tr>
-          <th v-if="dispalySort"></th>
-          <th v-if="checkBox"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
-          <th v-for="column in columns">
-            {{column.title}}
-            <span class="g-table-sort" v-if="column.key in orderBy" @click="sortHandle(column.key, orderBy[column.key])">
-              <g-icon icon="arrow-up" v-if="orderBy[column.key] === 'asc'"></g-icon>
-              <g-icon icon="arrow-down" v-if="orderBy[column.key] === 'desc'"></g-icon>
-              <g-icon icon="bupaixu" v-if="orderBy[column.key] === '-'"></g-icon>
-            </span>
-          </th>
-        </tr>
+          <tr>
+            <th v-if="dispalySort"></th>
+            <th v-if="checkBox"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
+            <th v-for="column in columns">
+              {{column.title}}
+              <span class="g-table-sort" v-if="column.key in orderBy" @click="sortHandle(column.key, orderBy[column.key])">
+                <g-icon icon="arrow-up" v-if="orderBy[column.key] === 'asc'"></g-icon>
+                <g-icon icon="arrow-down" v-if="orderBy[column.key] === 'desc'"></g-icon>
+                <g-icon icon="bupaixu" v-if="orderBy[column.key] === '-'"></g-icon>
+              </span>
+            </th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="(dataSourceItem, index) in dataSource">
-          <td v-if="dispalySort">{{index}}</td>
-          <td v-if="checkBox"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
-          <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
-        </tr>
+          <tr v-for="(dataSourceItem, index) in dataSource">
+            <td v-if="dispalySort">{{index}}</td>
+            <td v-if="checkBox"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
+            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -88,9 +88,10 @@
     },
     mounted() {
       this.judgeCheckboxStatus(this.selectedItems)
-      let tableCopy = this.$refs.table.cloneNode(true) // 这个table目前在内存中
+      let tableCopy = this.$refs.table.cloneNode(false) // 这个table目前在内存中
       tableCopy.className = 'g-table-copy' // thead
-      tableCopy.children[1].remove() // tbody
+      // tableCopy.children[1].remove() // tbody
+      tableCopy.appendChild(this.$refs.table.children[0]) // 复制一个引用地址
       console.log(tableCopy);
       this.$refs.wrapper.appendChild(tableCopy)
     },
