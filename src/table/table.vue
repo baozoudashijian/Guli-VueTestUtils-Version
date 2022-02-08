@@ -1,10 +1,11 @@
 <template>
-  <div class="g-table" :style="{height: height + 'px'}" ref="wrapper">
-    <div class="g-table-modal" v-if="loading">
-      <g-icon icon="loading"></g-icon>
-    </div>
-    <table :class="{bordered, stripe, 'small': size === 'small'}" ref="table">
-      <thead>
+  <div class="g-table-wrapper">
+    <div class="g-table" :style="{height: height + 'px'}" ref="wrapper">
+      <div class="g-table-modal" v-if="loading">
+        <g-icon icon="loading"></g-icon>
+      </div>
+      <table :class="{bordered, stripe, 'small': size === 'small'}" ref="table">
+        <thead>
         <tr>
           <th v-if="dispalySort"></th>
           <th v-if="checkBox"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
@@ -17,16 +18,18 @@
             </span>
           </th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr v-for="(dataSourceItem, index) in dataSource">
           <td v-if="dispalySort">{{index}}</td>
           <td v-if="checkBox"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
           <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
         </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -86,7 +89,7 @@
     mounted() {
       this.judgeCheckboxStatus(this.selectedItems)
       let tableCopy = this.$refs.table.cloneNode(true) // 这个table目前在内存中
-      tableCopy.children[0].className = 'xxx' // thead
+      tableCopy.className = 'g-table-copy' // thead
       tableCopy.children[1].remove() // tbody
       console.log(tableCopy);
       this.$refs.wrapper.appendChild(tableCopy)
@@ -169,66 +172,72 @@
 
 <style scoped lang="sass">
   @import "../var"
-  .g-table
+  .g-table-wrapper
     position: relative
-    overflow: scroll
-    &-modal
-      position: absolute
-      width: 100%
-      height: 100%
-      background-color: rgba(255, 255, 255, .8)
-      display: flex
-      justify-content: center
-      align-items: center
+    .g-table
+      overflow: scroll
+      &-modal
+        position: absolute
+        width: 100%
+        height: 100%
+        background-color: rgba(255, 255, 255, .8)
+        display: flex
+        justify-content: center
+        align-items: center
 
-      > svg
-        width: 2em
-        height: 2em
-        @include spin
-    table
-      /*display: block*/
-      border-collapse: collapse
-      width: 100%
+        > svg
+          width: 2em
+          height: 2em
+          @include spin
+      table
+        /*display: block*/
+        border-collapse: collapse
+        width: 100%
 
-      tr
-        text-align: left
-        font-size: 14px
-        &:hover
-          background-color: #f5f7fa
-
-        th
-          padding: 16px
-          font-weight: 500
-          background-color: #fafafa
-          border-bottom: 1px solid #f0f0f0
-        td
-          padding: 16px
-          border-bottom: 1px solid #f0f0f0
-
-      &.bordered
-        > tr
-          > th
-            border-right: 1px solid #f0f0f0
-            &:nth-child(1)
-              border-left: 1px solid #f0f0f0
-
-          > td
-            border-right: 1px solid #f0f0f0
-            &:nth-child(1)
-              border-left: 1px solid #f0f0f0
-      &.stripe
-
-        > tr
-          &:nth-child(2n-1)
-            background-color: #fafafa
+        tr
+          text-align: left
+          font-size: 14px
           &:hover
             background-color: #f5f7fa
-      &.small
-        > tr
-          > th
-            padding: 8px
 
-          > td
-            padding: 8px
+          th
+            padding: 16px
+            font-weight: 500
+            background-color: #fafafa
+            border-bottom: 1px solid #f0f0f0
+          td
+            padding: 16px
+            border-bottom: 1px solid #f0f0f0
+
+        &.bordered
+          > tr
+            > th
+              border-right: 1px solid #f0f0f0
+              &:nth-child(1)
+                border-left: 1px solid #f0f0f0
+
+            > td
+              border-right: 1px solid #f0f0f0
+              &:nth-child(1)
+                border-left: 1px solid #f0f0f0
+        &.stripe
+
+          > tr
+            &:nth-child(2n-1)
+              background-color: #fafafa
+            &:hover
+              background-color: #f5f7fa
+        &.small
+          > tr
+            > th
+              padding: 8px
+
+            > td
+              padding: 8px
+
+    .g-table-copy
+      position: absolute
+      top: 0
+      left: 0
 
 </style>
