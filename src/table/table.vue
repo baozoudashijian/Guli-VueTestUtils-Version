@@ -1,5 +1,5 @@
 <template>
-  <div class="g-table">
+  <div class="g-table" :style="{height: height + 'px'}">
     <div class="g-table-modal" v-if="loading">
       <g-icon icon="loading"></g-icon>
     </div>
@@ -70,6 +70,10 @@
       loading: {
         type: Boolean,
         default: false
+      },
+      height: {
+        type: [String, Number],
+        default: 400
       }
     },
     components: {
@@ -158,6 +162,7 @@
   @import "../var"
   .g-table
     position: relative
+    overflow: scroll
     &-modal
       position: absolute
       width: 100%

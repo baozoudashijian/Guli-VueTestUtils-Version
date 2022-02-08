@@ -1,6 +1,17 @@
 <template>
   <div id="app">
-    <g-table :loading="loading" :dataSource="dataSource" :columns="columns" :selected-items.sync="selected" bordered  stripe check-box :order-by.sync="orderBy" @update:orderBy="updateSortBy" />
+    <g-table
+            :loading="loading"
+            :dataSource="dataSource"
+            :columns="columns"
+            :selected-items.sync="selected"
+            bordered
+            stripe
+            check-box
+            :order-by.sync="orderBy"
+            @update:orderBy="updateSortBy"
+            :height="400"
+    />
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>
@@ -12,7 +23,7 @@
 
   export default {
     name: 'App',
-    data() {
+    data: function () {
       return {
         loading: false,
         currentPage: 2,
@@ -45,6 +56,102 @@
           },
           {
             key: '4',
+            name: '胡彦祖',
+            age: 42,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '5',
+            name: '胡彦祖',
+            age: 12,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '6',
+            name: '胡彦祖',
+            age: 102,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '7',
+            name: '胡彦祖',
+            age: 42,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '8',
+            name: '胡彦祖',
+            age: 12,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '9',
+            name: '胡彦祖',
+            age: 102,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '10',
+            name: '胡彦祖',
+            age: 42,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '11',
+            name: '胡彦斌',
+            age: 52,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '12',
+            name: '胡彦祖',
+            age: 12,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '13',
+            name: '胡彦祖',
+            age: 102,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '14',
+            name: '胡彦祖',
+            age: 42,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '15',
+            name: '胡彦祖',
+            age: 12,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '16',
+            name: '胡彦祖',
+            age: 102,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '17',
+            name: '胡彦祖',
+            age: 42,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '18',
+            name: '胡彦祖',
+            age: 12,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '19',
+            name: '胡彦祖',
+            age: 102,
+            address: '西湖区湖底公园1号',
+          },
+          {
+            key: '20',
             name: '胡彦祖',
             age: 42,
             address: '西湖区湖底公园1号',
