@@ -1,5 +1,5 @@
 <template>
-  <div class="g-table-wrapper">
+  <div class="g-table-wrapper" ref="container">
     <div class="g-table" :style="{height: height + 'px'}" ref="wrapper">
       <div class="g-table-modal" v-if="loading">
         <g-icon icon="loading"></g-icon>
@@ -91,9 +91,10 @@
       this.judgeCheckboxStatus(this.selectedItems)
       let tableCopy = this.$refs.table.cloneNode(false) // 这个table目前在内存中
       tableCopy.className = 'g-table-copy' // thead
+      let { height } = this.$refs.table.children[0].getBoundingClientRect()
+      this.$refs.container.style.paddingTop = height + 'px' // 加上padding，解决滚动条被遮住的问题
       // tableCopy.children[1].remove() // tbody
       tableCopy.appendChild(this.$refs.table.children[0]) // 复制一个引用地址
-      console.log(tableCopy);
       this.$refs.wrapper.appendChild(tableCopy)
     },
     computed: {
