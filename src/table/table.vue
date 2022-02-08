@@ -89,13 +89,7 @@
     },
     mounted() {
       this.judgeCheckboxStatus(this.selectedItems)
-      let tableCopy = this.$refs.table.cloneNode(false) // 这个table目前在内存中
-      tableCopy.className = 'g-table-copy' // thead
-      let { height } = this.$refs.table.children[0].getBoundingClientRect()
-      this.$refs.container.style.paddingTop = height + 'px' // 加上padding，解决滚动条被遮住的问题
-      // tableCopy.children[1].remove() // tbody
-      tableCopy.appendChild(this.$refs.table.children[0]) // 复制一个引用地址
-      this.$refs.wrapper.appendChild(tableCopy)
+      this.fixThead()
     },
     computed: {
       inAllSelectItems() {
@@ -163,6 +157,15 @@
         this.$emit('update:orderBy', copy)
         // // 更新数据 排序只能根据一个属性排序 可以根据多个属性排序吗
         // this.$emit
+      },
+      fixThead() {
+        let tableCopy = this.$refs.table.cloneNode(false) // 这个table目前在内存中
+        tableCopy.className = 'g-table-copy' // thead
+        let { height } = this.$refs.table.children[0].getBoundingClientRect()
+        this.$refs.container.style.paddingTop = height + 'px' // 加上padding，解决滚动条被遮住的问题
+        // tableCopy.children[1].remove() // tbody
+        tableCopy.appendChild(this.$refs.table.children[0]) // 复制一个引用地址
+        this.$refs.wrapper.appendChild(tableCopy)
       }
     },
     watch: {
