@@ -8,6 +8,7 @@
             bordered
             stripe
             check-box
+            dispaly-sort
             :order-by.sync="orderBy"
             @update:orderBy="updateSortBy"
             :height="400"
