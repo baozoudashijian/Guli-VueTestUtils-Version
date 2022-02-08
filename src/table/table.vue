@@ -7,9 +7,9 @@
       <table :class="{bordered, stripe, 'small': size === 'small'}" ref="table">
         <thead>
           <tr>
-            <th v-if="dispalySort"></th>
-            <th v-if="checkBox"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
-            <th v-for="column in columns">
+            <th v-if="dispalySort" style="width: 16px"></th>
+            <th v-if="checkBox" style="width: 16px"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
+            <th v-for="column in columns" :style="{width: column.width + 'px'}">
               {{column.title}}
               <span class="g-table-sort" v-if="column.key in orderBy" @click="sortHandle(column.key, orderBy[column.key])">
                 <g-icon icon="arrow-up" v-if="orderBy[column.key] === 'asc'"></g-icon>
@@ -21,9 +21,10 @@
         </thead>
         <tbody>
           <tr v-for="(dataSourceItem, index) in dataSource">
-            <td v-if="dispalySort">{{index}}</td>
-            <td v-if="checkBox"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
-            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>
+            <td v-if="dispalySort" style="width: 16px">{{index}}</td>
+            <td v-if="checkBox" style="width: 16px"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
+<!--            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>-->
+            <td v-for="column in columns" :style="{width: column.width + 'px'}">{{dataSourceItem[column.dataIndex]}}</td>
           </tr>
         </tbody>
       </table>
