@@ -160,6 +160,7 @@
       },
       fixThead() {
         let tableCopy = this.$refs.table.cloneNode(false) // 这个table目前在内存中
+        this.tableCopy = tableCopy // 方便组件销毁时候删除
         tableCopy.className = 'g-table-copy' // thead
         let { height } = this.$refs.table.children[0].getBoundingClientRect()
         this.$refs.container.style.paddingTop = height + 'px' // 加上padding，解决滚动条被遮住的问题
@@ -167,6 +168,9 @@
         tableCopy.appendChild(this.$refs.table.children[0]) // 复制一个引用地址
         this.$refs.wrapper.appendChild(tableCopy)
       }
+    },
+    beforeDestroy() {
+      this.tableCopy.remove()
     },
     watch: {
       selectedItems(nextVal) {
