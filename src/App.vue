@@ -13,6 +13,7 @@
             @update:orderBy="updateSortBy"
             :height="400"
             expanded-key="description"
+            dispalyExpanded
     />
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>

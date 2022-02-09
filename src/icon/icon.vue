@@ -1,5 +1,5 @@
 <template>
-  <svg class="g-icon">
+  <svg class="g-icon" @click="$emit('click')">
     <use :xlink:href="getIcon"></use>
   </svg>
 </template>

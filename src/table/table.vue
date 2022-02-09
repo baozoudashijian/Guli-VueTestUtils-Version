@@ -22,6 +22,9 @@
         <tbody>
           <template v-for="(dataSourceItem, index) in dataSource">
             <tr :key="dataSourceItem.key">
+              <td v-if="dispalyExpanded" style="width: 16px">
+                <g-icon icon="expanded" @click="expandedHandle"></g-icon>
+              </td>
               <td v-if="dispalySort" style="width: 16px">{{index}}</td>
               <td v-if="checkBox" style="width: 16px"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
               <!--            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>-->
@@ -92,10 +95,19 @@
       },
       expandedKey: {
         type: String
+      },
+      dispalyExpanded: {
+        type: Boolean,
+        default: false
       }
     },
     components: {
       'g-icon': Icon
+    },
+    data() {
+      return {
+        expandedItems: []
+      }
     },
     mounted() {
       this.judgeCheckboxStatus(this.selectedItems)
@@ -177,6 +189,9 @@
         // tableCopy.children[1].remove() // tbody
         tableCopy.appendChild(this.$refs.table.children[0]) // 复制一个引用地址
         this.$refs.wrapper.appendChild(tableCopy)
+      },
+      expandedHandle() {
+        console.log(123)
       }
     },
     beforeDestroy() {
