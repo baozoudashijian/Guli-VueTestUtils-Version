@@ -23,15 +23,15 @@
           <template v-for="(dataSourceItem, index) in dataSource">
             <tr :key="dataSourceItem.key">
               <td v-if="dispalyExpanded" style="width: 16px">
-                <g-icon icon="expanded" @click="expandedHandle"></g-icon>
+                <g-icon :icon="expandedItems.indexOf(dataSourceItem.key) >=0 ? 'expanded' : 'unexpanded'" @click="expandedHandle(dataSourceItem.key)"></g-icon>
               </td>
-              <td v-if="dispalySort" style="width: 16px">{{index}}</td>
+              <td v-if="dispalySort" style="width: 16px">{{index + 1}}</td>
               <td v-if="checkBox" style="width: 16px"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
               <!--            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>-->
               <td v-for="column in columns" :style="{width: column.width + 'px'}">{{dataSourceItem[column.dataIndex]}}</td>
             </tr>
 
-            <tr :key="`${dataSourceItem.key}-expanded`">
+            <tr v-if="expandedItems.indexOf(dataSourceItem.key) >= 0" :key="`${dataSourceItem.key}-expanded`">
               <td :colspan="5">{{dataSourceItem.description}}</td>
             </tr>
           </template>
@@ -190,8 +190,14 @@
         tableCopy.appendChild(this.$refs.table.children[0]) // 复制一个引用地址
         this.$refs.wrapper.appendChild(tableCopy)
       },
-      expandedHandle() {
-        console.log(123)
+      expandedHandle(key) {
+        let flag = this.expandedItems.indexOf(key) >= 0
+        if(flag) {
+          // splice || filter
+          this.expandedItems.splice(this.expandedItems.indexOf(key), 1)
+        } else {
+          this.expandedItems.push(key)
+        }
       }
     },
     beforeDestroy() {
