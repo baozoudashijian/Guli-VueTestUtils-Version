@@ -7,6 +7,7 @@
       <table :class="{bordered, stripe, 'small': size === 'small'}" ref="table">
         <thead>
           <tr>
+            <th v-if="dispalyExpanded" style="width: 16px"></th>
             <th v-if="dispalySort" style="width: 16px"></th>
             <th v-if="checkBox" style="width: 16px"><input ref="selectAll" type="checkbox" @change="onChangeAllItem" :checked="inAllSelectItems"></th>
             <th v-for="column in columns" :style="{width: column.width + 'px'}">
@@ -23,7 +24,7 @@
           <template v-for="(dataSourceItem, index) in dataSource">
             <tr :key="dataSourceItem.key">
               <td v-if="dispalyExpanded" style="width: 16px">
-                <g-icon :icon="expandedItems.indexOf(dataSourceItem.key) >=0 ? 'expanded' : 'unexpanded'" @click="expandedHandle(dataSourceItem.key)"></g-icon>
+                <g-icon :icon="isExpanded(dataSourceItem.key) ? 'expanded' : 'unexpanded'" @click="expandedHandle(dataSourceItem.key)"></g-icon>
               </td>
               <td v-if="dispalySort" style="width: 16px">{{index + 1}}</td>
               <td v-if="checkBox" style="width: 16px"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
@@ -31,7 +32,7 @@
               <td v-for="column in columns" :style="{width: column.width + 'px'}">{{dataSourceItem[column.dataIndex]}}</td>
             </tr>
 
-            <tr v-if="expandedItems.indexOf(dataSourceItem.key) >= 0" :key="`${dataSourceItem.key}-expanded`">
+            <tr v-if="isExpanded(dataSourceItem.key)" :key="`${dataSourceItem.key}-expanded`">
               <td :colspan="5">{{dataSourceItem.description}}</td>
             </tr>
           </template>
@@ -198,6 +199,9 @@
         } else {
           this.expandedItems.push(key)
         }
+      },
+      isExpanded (key) {
+        return this.expandedItems.indexOf(key) >= 0
       }
     },
     beforeDestroy() {
