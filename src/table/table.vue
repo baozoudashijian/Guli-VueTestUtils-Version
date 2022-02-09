@@ -20,12 +20,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(dataSourceItem, index) in dataSource">
-            <td v-if="dispalySort" style="width: 16px">{{index}}</td>
-            <td v-if="checkBox" style="width: 16px"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
-<!--            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>-->
-            <td v-for="column in columns" :style="{width: column.width + 'px'}">{{dataSourceItem[column.dataIndex]}}</td>
-          </tr>
+          <template v-for="(dataSourceItem, index) in dataSource">
+            <tr :key="dataSourceItem.key">
+              <td v-if="dispalySort" style="width: 16px">{{index}}</td>
+              <td v-if="checkBox" style="width: 16px"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
+              <!--            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>-->
+              <td v-for="column in columns" :style="{width: column.width + 'px'}">{{dataSourceItem[column.dataIndex]}}</td>
+            </tr>
+
+            <tr :key="`${dataSourceItem.key}-expanded`">
+              <td :colspan="5">{{dataSourceItem.description}}</td>
+            </tr>
+          </template>
+
         </tbody>
       </table>
     </div>
@@ -82,6 +89,9 @@
       height: {
         type: [String, Number],
         default: 400
+      },
+      expandedKey: {
+        type: String
       }
     },
     components: {
