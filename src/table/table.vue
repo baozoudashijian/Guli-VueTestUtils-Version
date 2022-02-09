@@ -33,7 +33,7 @@
             </tr>
 
             <tr v-if="isExpanded(dataSourceItem.key)" :key="`${dataSourceItem.key}-expanded`">
-              <td :colspan="5">{{dataSourceItem.description}}</td>
+              <td :colspan="calColSpan">{{dataSourceItem.description}}</td>
             </tr>
           </template>
 
@@ -132,6 +132,10 @@
           }
         }
         return flag
+      },
+      calColSpan() {
+        // 计算表头的个数
+        return this.$refs.table.children[0].children[0].children.length
       }
     },
     methods: {
