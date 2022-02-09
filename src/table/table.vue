@@ -18,6 +18,7 @@
                 <g-icon icon="bupaixu" v-if="orderBy[column.key] === '-'"></g-icon>
               </span>
             </th>
+            <th v-if="$scopedSlots.default">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@
               <td v-if="checkBox" style="width: 16px"><input @change="onChangeItem(dataSourceItem, $event)" :checked="inSelectItems(dataSourceItem)" type="checkbox"></td>
               <!--            <td v-for="key in Object.keys(dataSourceItem).filter(item => item !== 'key')">{{dataSourceItem[key]}}</td>-->
               <td v-for="column in columns" :style="{width: column.width + 'px'}">{{dataSourceItem[column.dataIndex]}}</td>
+              <td v-if="$scopedSlots.default"><slot :data="dataSourceItem"></slot></td>
             </tr>
 
             <tr v-if="isExpanded(dataSourceItem.key)" :key="`${dataSourceItem.key}-expanded`">

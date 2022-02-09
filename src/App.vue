@@ -14,7 +14,12 @@
             :height="400"
             expanded-key="description"
             dispalyExpanded
-    />
+    >
+      <template slot-scope="props">
+        <g-button type="primary">{{props}}</g-button>
+        <g-button type="error">删除</g-button>
+      </template>
+    </g-table>
     <g-pagination :total-page="10" :current-page.sync="currentPage"></g-pagination>
   </div>
 </template>
@@ -23,6 +28,7 @@
 
   import Pagination from './pagination/pagination'
   import Table from './table/table'
+  import Button from './button/button'
 
   export default {
     name: 'App',
@@ -206,7 +212,8 @@
     },
     components: {
       'g-pagination': Pagination,
-      'g-table': Table
+      'g-table': Table,
+      'g-button': Button
     },
     methods: {
       updateSortBy() {
